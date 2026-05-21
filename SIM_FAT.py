@@ -63,6 +63,25 @@ def main():
     print("Sistema FAT inicializado correctamente.")
     print("Directorio actual: /")
 
+    while True: #bucle infinito, para que no se cierre solito
+        try: #capturamos posibles errores o interrupciones de teclado
+            entrada = input("\n> ").strip().split() #mostramos el indicador de la consola, borramos los espacios en blanco accidentales
+            #y dividimos la cadena en palabras individuales
+        except (KeyboardInterrupt, EOFError): #captura si el usuario  fuerza la salida
+            print("\nSaliendo del simulador FAT...") #mensajito
+            break #finaliza la ejecucion
+
+        if not entrada: #si la lista de entrada esta vacia (solo apretamos enter)
+            continue #regresa al inicio del bucle
+
+        comando = entrada[0] #almacena el primer elemento de la lista en la variable
+
+        if comando == "exit": #si ponemos el comando de salida
+            print("Saliendo del simulador FAT...")
+            break
+        else: #si ponemos cualquier otra cosa
+            print("Comando no reconocido o no implementado aún.")
+
 #ejecucion
 if __name__ == "__main__":
     main()
