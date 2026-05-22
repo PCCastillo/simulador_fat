@@ -72,6 +72,43 @@ def cmd_ls():
     else:
         print("(Directorio vacío)") #si esta vacio
 
+#comando cd para navegar entre directorios
+def cmd_cd(destino):
+    global GPWD #tomamos la variable que contiene donde estamos parados
+    registros = leer_registros() #leemos los registros en registros
+    
+    if destino == "..": #para ir a un dirctorio superior
+        if GPWD == 0:
+            print("Ya te encuentras en el directorio raíz (/).")
+            return
+        for r in registros: 
+            if r["id"] == GPWD:
+                GPWD = r["padre"] #cambiamos nuestro lugar al directorio padre
+                print(f"Directorio actual cambiado a: {obtener_ruta_actual()}")
+                return
+    else:
+        for r in registros: #ahora iteramos  sobre los registros
+            if r["padre"] == GPWD and r["nombre"] == destino and r["tipo"] == "DIR": #si padre coincide, nombre y tipo, cambiamos
+                GPWD = r["id"]
+                print(f"Directorio actual cambiado a: {obtener_ruta_actual()}")
+                return
+        print(f"Error: El directorio '{destino}' no existe en la ubicación actual.")
+
+#para obtener la ruta actual en la que estamos
+def obtener_ruta_actual():
+    if GPWD == 0: #si nos encontramos en la raiz
+        return "/"
+    registros = leer_registros() #lee registros
+    id_actual = GPWD #toma el lugar actual donde estamos
+    ruta = "" #inicializamos la ruta
+    while id_actual != 0: #mientras que no lleguemos a la raiz no nos detenemos
+        for r in registros: #iteramos en registros
+            if r["id"] == id_actual: #si  el id del registro actual es  guarda el nombre
+                ruta = "/" + r["nombre"] + ruta  #guardamos junto a la ruta anterior
+                id_actual = r["padre"] #nos movemos de directorio
+                break
+    return ruta
+
 #flujo principal
 def main():
     global GPWD #avisamos que vamos a usar la variable de donde estamos parados
