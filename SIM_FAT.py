@@ -166,10 +166,9 @@ def cmd_touch(nombre_archivo):
 def cmd_ls_l():
     registros = leer_registros()
     hijos = [r for r in registros if r["padre"] == GPWD]
-    print("ID\tTIPO\tPERMISOS | TAMAÑO | NOMBRE")
+    print("ID | TIPO | PERMISOS | TAMAÑO | NOMBRE")
     for r in hijos:
-        print(
-            f"{r['id']}\t{r['tipo']}\t{r['permisos']}      | {r['tamaño']}     | {r['nombre']}")
+        print(f"{r['id']} | {r['tipo']} | {r['permisos']} | {r['tamaño']} | {r['nombre']}")
 
 # actualizamos todo el archivo
 
@@ -312,11 +311,8 @@ def main():
             else:
                 cmd_chmod(entrada[1], entrada[2])
         # Inregación de hilo para prueba de concurrencia
-        elif comando == "test":
-            if len(entrada) > 1 and entrada[1] == "hilos":
-                cmd_test_hilos()
-            else:
-                print("Error: El comando es 'test hilos'")
+        elif comando == "test_hilos":
+            cmd_test_hilos()
 
         else:  # si ponemos cualquier otra cosa
             print("Comando no reconocido o no implementado aún.")
