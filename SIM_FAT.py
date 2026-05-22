@@ -143,7 +143,7 @@ def main():
     print("SIMULADOR FAT EN PYTHON")
     print("====================")
     print("Sistema FAT inicializado correctamente.")
-    print("Comandos: mkdir, ls")
+    print("Comandos: mkdir, ls, cd")
     print("Directorio actual: /")
 
     while True: #bucle infinito, para que no se cierre solito
@@ -182,7 +182,11 @@ def main():
             else:
                 cmd_cd(entrada[1])
 
-        
+        elif comando == "touch":
+            if len(entrada) < 2:
+                print("Error: Falta especificar el nombre del archivo.")
+            else:
+                cmd_touch(entrada[1])
 
         else: #si ponemos cualquier otra cosa
             print("Comando no reconocido o no implementado aún.")
