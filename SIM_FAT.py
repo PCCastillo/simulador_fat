@@ -163,7 +163,7 @@ def cmd_touch(nombre_archivo):
 # ls detallado
 
 
-def cmd_ls_1():
+def cmd_ls_l():
     registros = leer_registros()
     hijos = [r for r in registros if r["padre"] == GPWD]
     print("ID\tTIPO\tPERMISOS | TAMAÑO | NOMBRE")
@@ -282,8 +282,8 @@ def main():
                 cmd_mkdir(entrada[1])
 
         elif comando == "ls":
-            if len(entrada) > 1 and entrada[1] == "-1":
-                cmd_ls_1()
+            if len(entrada) > 1 and entrada[1] == "-l":
+                cmd_ls_l()
             else:
                 cmd_ls()
 
