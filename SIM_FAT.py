@@ -2,7 +2,7 @@
 import threading #manejar hilos
 import os #utilidades del sistema operativo
 import time #manejar el tiempo
-
+FILE="FILE"
 DATABASE_FILE = "fat_db.txt" #nombre del archivo que guarda la base de datos del fat
 GPWD = 0  #lleva el control de donde estamos parados
 file_lock = threading.Lock() #obliga a que los hilos pueda hacer una sola tarea a la vez
@@ -108,6 +108,19 @@ def obtener_ruta_actual():
                 id_actual = r["padre"] #nos movemos de directorio
                 break
     return ruta
+
+#touch para crear
+def cmd_touch(nombre_archivo):
+    with file_lock:
+        registros = leer_registros_sin_lock()
+        for r in registros:
+            if r["padre"] == GPWD and r["nombre"] == nombre_archivo: #si ya existe un archivo dentro del dir
+                print(f"Error: El archivo o directorio '{nombre_archivo}' ya existe.")
+                return
+        nuevo_id = obtener_siguiente_id(registros)
+        with open(DATABASE_FILE, "a", encoding="utf-8") as f: #abre para anexar a
+            f.write(f"{nuevo_id}|{nombre_archivo}|{FILE}|{GPWD}|rw-|10\n") #nuevo registro en el formato
+    print(f"Archivo '{nombre_archivo}' creado correctamente.") #confirma
 
 #flujo principal
 def main():
