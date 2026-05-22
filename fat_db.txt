@@ -1,3 +1,8 @@
 0|/|DIR|-1|rwx|0
 1|directorio|DIR|0|rwx|0
 2|archivo.txt|FILE|1|rwx|10
+3|hilo_1.txt|FILE|0|rw-|10
+4|hilo_2.txt|FILE|0|rw-|10
+5|hilo_3.txt|FILE|0|rw-|10
+6|hilo_4.txt|FILE|0|rw-|10
+7|hilo_5.txt|FILE|0|rw-|10
