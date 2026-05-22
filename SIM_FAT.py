@@ -164,6 +164,29 @@ def cmd_chmod(nuevos_permisos, nombre_objetivo):
     else:
         print(f"Error: No se encontró '{nombre_objetivo}' en este directorio.")
 
+###############################-----HILOS-----########################################
+
+def tarea_hilo(id_hilo):
+    nombre_archivo = f"hilo_{id_hilo}.txt"
+    print(f"Hilo {id_hilo} creando archivo {nombre_archivo}")
+    cmd_touch(nombre_archivo)
+    time.sleep(0.1)
+
+def cmd_test_hilos():
+    print("Iniciando prueba concurrente con hilos...")
+    hilos = []
+    for i in range(1, 6):
+        t = threading.Thread(target=tarea_hilo, args=(i,))
+        hilos.append(t)
+        t.start()
+
+    for t in hilos:
+        t.join()
+
+    print("Todos los hilos finalizaron correctamente.")
+
+######################################################################################
+
 #flujo principal
 def main():
     global GPWD #avisamos que vamos a usar la variable de donde estamos parados
