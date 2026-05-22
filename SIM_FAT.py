@@ -126,12 +126,28 @@ def cmd_touch(nombre_archivo):
 def cmd_ls_1():
     registros = leer_registros()
     hijos = [r for r in registros if r["padre"] == GPWD]
-    
     print("ID\tTIPO\tPERMISOS | TAMAÑO | NOMBRE")
     for r in hijos:
         print(f"{r['id']}\t{r['tipo']}\t{r['permisos']}      | {r['tamaño']}     | {r['nombre']}")
 
+#actualizamos todo el archivo
+def actualizar_archivo_completo(registros):
+    with file_lock:
+        with open(DATABASE_FILE, "w", encoding="utf-8") as f:
+            for r in registros:
+                f.write(f"{r['id']}|{r['nombre']}|{r['tipo']}|{r['padre']}|{r['permisos']}|{r['tamaño']}\n")
 
+#eliminar
+def cmd_rm(nombre_archivo):
+    registros = leer_registros()
+    inicial_len = len(registros)
+    #filtra excluyendo el archivo que hace match
+    registros = [r for r in registros if not (r["padre"] == GPWD and r["nombre"] == nombre_archivo and r["tipo"] == "FILE")]
+    if len(registros) < inicial_len:
+        actualizar_archivo_completo(registros)
+        print(f"Archivo '{nombre_archivo}' eliminado correctamente.")
+    else:
+        print(f"Error: El archivo '{nombre_archivo}' no existe o es un directorio.")
 
 #flujo principal
 def main():
@@ -143,7 +159,7 @@ def main():
     print("SIMULADOR FAT EN PYTHON")
     print("====================")
     print("Sistema FAT inicializado correctamente.")
-    print("Comandos: mkdir, ls, cd")
+    print("Comandos: mkdir, ls, cd, touch")
     print("Directorio actual: /")
 
     while True: #bucle infinito, para que no se cierre solito
@@ -187,6 +203,12 @@ def main():
                 print("Error: Falta especificar el nombre del archivo.")
             else:
                 cmd_touch(entrada[1])
+
+        elif comando == "rm":
+            if len(entrada) < 2:
+                print("Error: Falta especificar el archivo a eliminar.")
+            else:
+                cmd_rm(entrada[1])
 
         else: #si ponemos cualquier otra cosa
             print("Comando no reconocido o no implementado aún.")
