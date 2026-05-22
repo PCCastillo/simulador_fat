@@ -51,6 +51,27 @@ def obtener_siguiente_id(registros):
         return 0
     return max(r["id"] for r in registros) + 1 #encuentra el mas alto y se suma 1 para que el mas reciente tenga el mas alto
 
+#comando mkdir para crear directorios
+def cmd_mkdir(nombre_directorio):
+    registros = leer_registros() #llamamos a la funcion para leer los registros
+    for r in registros: #nos movemos entre los registros
+        if r["padre"] == GPWD and r["nombre"] == nombre_directorio: #busca algun directorio con el mismo nombre
+            print(f"Error: El directorio o archivo '{nombre_directorio}' ya existe.")
+            return #se va
+    nuevo_id = obtener_siguiente_id(registros) #obtiene el siguiente id
+    escribir_registro(nuevo_id, nombre_directorio, "DIR", GPWD, "rwx", 0) #escribe nuevo directorio con los parametros dados
+    print(f"Directorio '{nombre_directorio}' creado correctamente.") #confirma la creacion
+
+#comando ls para mostrar registros
+def cmd_ls():
+    registros = leer_registros() #llama a la funcion para leer
+    encontrados = [r["nombre"] for r in registros if r["padre"] == GPWD] #guarda todos los encontrados en un arreglo para imprimir
+    if encontrados:
+        for nombre in encontrados:
+            print(nombre) #imprime los elementos
+    else:
+        print("(Directorio vacío)") #si esta vacio
+
 #flujo principal
 def main():
     global GPWD #avisamos que vamos a usar la variable de donde estamos parados
