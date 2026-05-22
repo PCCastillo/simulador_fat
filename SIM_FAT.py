@@ -122,6 +122,17 @@ def cmd_touch(nombre_archivo):
             f.write(f"{nuevo_id}|{nombre_archivo}|{FILE}|{GPWD}|rw-|10\n") #nuevo registro en el formato
     print(f"Archivo '{nombre_archivo}' creado correctamente.") #confirma
 
+#ls detallado
+def cmd_ls_1():
+    registros = leer_registros()
+    hijos = [r for r in registros if r["padre"] == GPWD]
+    
+    print("ID\tTIPO\tPERMISOS | TAMAÑO | NOMBRE")
+    for r in hijos:
+        print(f"{r['id']}\t{r['tipo']}\t{r['permisos']}      | {r['tamaño']}     | {r['nombre']}")
+
+
+
 #flujo principal
 def main():
     global GPWD #avisamos que vamos a usar la variable de donde estamos parados
