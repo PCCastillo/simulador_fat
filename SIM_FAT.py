@@ -149,6 +149,21 @@ def cmd_rm(nombre_archivo):
     else:
         print(f"Error: El archivo '{nombre_archivo}' no existe o es un directorio.")
 
+#chemod
+def cmd_chmod(nuevos_permisos, nombre_objetivo):
+    registros = leer_registros() #obtenemos todos los registros
+    modificado = False #aun no se hace nada
+    for r in registros:
+        if r["padre"] == GPWD and r["nombre"] == nombre_objetivo: #si coincide
+            r["permisos"] = nuevos_permisos #sobreescribimos los permisos
+            modificado = True #ahora si esta hacido
+            break
+    if modificado:
+        actualizar_archivo_completo(registros)
+        print(f"Permisos de '{nombre_objetivo}' cambiados a {nuevos_permisos}.")
+    else:
+        print(f"Error: No se encontró '{nombre_objetivo}' en este directorio.")
+
 #flujo principal
 def main():
     global GPWD #avisamos que vamos a usar la variable de donde estamos parados
@@ -159,7 +174,7 @@ def main():
     print("SIMULADOR FAT EN PYTHON")
     print("====================")
     print("Sistema FAT inicializado correctamente.")
-    print("Comandos: mkdir, ls, cd, touch")
+    print("Comandos: mkdir, ls, cd, touch, rm y chmod")
     print("Directorio actual: /")
 
     while True: #bucle infinito, para que no se cierre solito
@@ -209,6 +224,12 @@ def main():
                 print("Error: Falta especificar el archivo a eliminar.")
             else:
                 cmd_rm(entrada[1])
+
+        elif comando == "chmod": #chemod jeje
+            if len(entrada) < 3:
+                print("Error: Formato requerido: chmod <permisos> <nombre>")
+            else:
+                cmd_chmod(entrada[1], entrada[2])
 
         else: #si ponemos cualquier otra cosa
             print("Comando no reconocido o no implementado aún.")
