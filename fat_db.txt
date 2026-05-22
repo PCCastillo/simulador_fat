@@ -1,1 +1,2 @@
 0|/|DIR|-1|rwx|0
+1|directorio|DIR|0|rwx|0

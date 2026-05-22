@@ -143,6 +143,7 @@ def main():
     print("SIMULADOR FAT EN PYTHON")
     print("====================")
     print("Sistema FAT inicializado correctamente.")
+    print("Comandos: mkdir, ls")
     print("Directorio actual: /")
 
     while True: #bucle infinito, para que no se cierre solito
@@ -161,6 +162,28 @@ def main():
         if comando == "exit": #si ponemos el comando de salida
             print("Saliendo del simulador FAT...")
             break
+
+        elif comando == "mkdir":
+            if len(entrada) < 2:
+                print("Error: Falta especificar el nombre del directorio.")
+            else:
+                cmd_mkdir(entrada[1])
+
+        elif comando == "ls":
+            if len(entrada) > 1 and entrada[1] == "-1":
+                cmd_ls_1()
+            else:
+                cmd_ls()
+
+        elif comando == "cd":
+            if len(entrada) < 2:
+                GPWD = 0
+                print("Directorio actual cambiado a: /")
+            else:
+                cmd_cd(entrada[1])
+
+        
+
         else: #si ponemos cualquier otra cosa
             print("Comando no reconocido o no implementado aún.")
 
