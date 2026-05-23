@@ -1,1 +1,1 @@
-# simulador_fat
+El objetivo general de este proyecto es desarrollar un simulador funcional de un sistema de archivos simplificado, inspirado en la arquitectura FAT , utilizando el lenguaje de programación Python. El sistema debe operar prescindiendo de una base de datos convencional, utilizando en su lugar un archivo de texto plano fat_db.txt como mecanismo de persistencia para almacenar la jerarquía de directorios y archivos.
