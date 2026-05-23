@@ -241,19 +241,21 @@ def cmd_test_hilos():
 
 # flujo principal
 
-
-def main():
-    global GPWD  # avisamos que vamos a usar la variable de donde estamos parados
-    inicializar_sistema()
-
-    # encabezado basico
+def cmd_help():
+# encabezado basico
     print("====================")
     print("SIMULADOR FAT EN PYTHON")
     print("====================")
     print("Sistema FAT inicializado correctamente.")
     print("Comandos: mkdir, ls, cd, touch, rm y chmod")
+    print("Para salir escriba: exit o Ctrl C")
     print("Directorio actual: /")
 
+#main
+def main():
+    global GPWD  # avisamos que vamos a usar la variable de donde estamos parados
+    inicializar_sistema()
+    cmd_help()
     while True:  # bucle infinito, para que no se cierre solito
         try:  # capturamos posibles errores o interrupciones de teclado
             # mostramos el indicador de la consola, borramos los espacios en blanco accidentales
@@ -313,6 +315,10 @@ def main():
         # Inregación de hilo para prueba de concurrencia
         elif comando == "test_hilos":
             cmd_test_hilos()
+
+        #comando help para mostrar ayuda
+        elif comando == "help":
+            cmd_help()
 
         else:  # si ponemos cualquier otra cosa
             print("Comando no reconocido o no implementado aún.")
