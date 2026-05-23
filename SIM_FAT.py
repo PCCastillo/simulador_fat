@@ -242,14 +242,24 @@ def cmd_test_hilos():
 # flujo principal
 
 def cmd_help():
-# encabezado basico
     print("====================")
     print("SIMULADOR FAT EN PYTHON")
     print("====================")
     print("Sistema FAT inicializado correctamente.")
-    print("Comandos: mkdir, ls, cd, touch, rm y chmod")
-    print("Para salir escriba: exit o Ctrl C")
-    print("Directorio actual: /")
+    print("Directorio actual: " + obtener_ruta_actual())
+    print("\nComandos disponibles:")
+    print("mkdir <nombre_directorio>")
+    print("cd <nombre_directorio>")
+    print("cd .. (para regresar al directorio padre)")
+    print("cd (para regresar a la raíz /)")
+    print("touch <nombre_archivo>")
+    print("ls")
+    print("ls -l")
+    print("chmod <permisos> <nombre>")
+    print("rm <nombre_archivo>")
+    print("test_hilos")
+    print("help (muestra esta guía)")
+    print("exit o Ctrl C (salir del sistema)")
 
 #main
 def main():
